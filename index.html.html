@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Madila Kotesh – Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0e14;
+    --surface: #111620;
+    --surface2: #1a2030;
+    --accent: #00e5a0;
+    --accent2: #0af;
+    --text: #e8edf5;
+    --muted: #7a8799;
+    --border: rgba(255,255,255,0.07);
+    --mono: 'Space Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,14,20,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem; height: 60px;
+  }
+  .logo { font-family: var(--mono); font-size: 13px; color: var(--accent); letter-spacing: 0.08em; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; letter-spacing: 0.04em; transition: color .2s; cursor: pointer; }
+  .nav-links a:hover { color: var(--accent); }
+
+  .hero {
+    min-height: 92vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 5rem 2.5rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(0,229,160,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,160,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 70% 60% at 30% 50%, black 0%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 30% 50%, black 0%, transparent 80%);
+  }
+  .hero-tag { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp .6s .1s forwards; }
+  .hero h1 { font-size: clamp(2.8rem, 6vw, 5.5rem); font-weight: 600; line-height: 1.05; letter-spacing: -0.02em; opacity: 0; animation: fadeUp .6s .2s forwards; }
+  .hero h1 span { color: var(--accent); }
+  .hero-sub { margin-top: 1.5rem; font-size: 1.1rem; color: var(--muted); max-width: 520px; font-weight: 300; opacity: 0; animation: fadeUp .6s .35s forwards; }
+  .hero-cta { margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap; opacity: 0; animation: fadeUp .6s .5s forwards; }
+  .btn-primary { background: var(--accent); color: #040d0a; font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; padding: .7rem 1.6rem; border: none; border-radius: 4px; cursor: pointer; font-weight: 700; transition: opacity .2s, transform .15s; }
+  .btn-primary:hover { opacity: .88; transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--text); font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; padding: .7rem 1.6rem; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; transition: border-color .2s, transform .15s; }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+  .status-bar { display: flex; gap: 2rem; margin-top: 4rem; opacity: 0; animation: fadeUp .6s .65s forwards; }
+  .status-item { display: flex; flex-direction: column; }
+  .status-val { font-family: var(--mono); font-size: 1.6rem; color: var(--accent); font-weight: 700; }
+  .status-lbl { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 2px; }
+
+  section { padding: 5rem 2.5rem; }
+  .section-label { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 2.5rem; display: flex; align-items: center; gap: .75rem; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  h2 { font-size: 1.9rem; font-weight: 500; letter-spacing: -0.01em; margin-bottom: .5rem; }
+
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 2rem; }
+  .skill-card { background: var(--surface); padding: 1.5rem; transition: background .2s; }
+  .skill-card:hover { background: var(--surface2); }
+  .skill-icon { font-size: 20px; margin-bottom: .75rem; }
+  .skill-name { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: .3rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: .6rem; }
+  .tag { font-family: var(--mono); font-size: 10px; padding: 2px 8px; border-radius: 3px; background: rgba(0,229,160,0.08); color: var(--accent); border: 1px solid rgba(0,229,160,0.18); letter-spacing: 0.04em; }
+
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 2rem; }
+  .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; position: relative; overflow: hidden; transition: border-color .25s, transform .2s; cursor: default; }
+  .project-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,229,160,0.04) 0%, transparent 60%); opacity: 0; transition: opacity .3s; }
+  .project-card:hover { border-color: rgba(0,229,160,0.3); transform: translateY(-3px); }
+  .project-card:hover::before { opacity: 1; }
+  .proj-num { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-bottom: .75rem; }
+  .proj-title { font-size: 1rem; font-weight: 500; margin-bottom: .6rem; line-height: 1.4; }
+  .proj-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .proj-tech { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+
+  .exp-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 2rem; }
+  .exp-item { background: var(--surface); padding: 1.5rem 2rem; display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: start; transition: background .2s; }
+  .exp-item:hover { background: var(--surface2); }
+  .exp-role { font-size: 1rem; font-weight: 500; margin-bottom: .2rem; }
+  .exp-company { font-size: 13px; color: var(--accent); margin-bottom: .5rem; }
+  .exp-desc { font-size: 13px; color: var(--muted); }
+  .exp-date { font-family: var(--mono); font-size: 11px; color: var(--muted); text-align: right; white-space: nowrap; }
+
+  .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem; }
+  .cert-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem 1.4rem; display: flex; gap: .9rem; align-items: flex-start; transition: border-color .2s; }
+  .cert-card:hover { border-color: rgba(0,170,255,0.3); }
+  .cert-icon { width: 32px; height: 32px; border-radius: 6px; background: rgba(0,170,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .cert-name { font-size: 13px; font-weight: 500; line-height: 1.4; }
+  .cert-org { font-size: 11px; color: var(--muted); margin-top: 3px; font-family: var(--mono); }
+
+  .contact-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .contact-inner { max-width: 600px; }
+  .contact-links { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; }
+  .contact-chip { display: flex; align-items: center; gap: .5rem; padding: .6rem 1.2rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 40px; font-size: 13px; color: var(--text); text-decoration: none; transition: border-color .2s, color .2s; cursor: pointer; }
+  .contact-chip:hover { border-color: var(--accent); color: var(--accent); }
+  .contact-chip-icon { font-size: 13px; }
+
+  footer { padding: 2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-copy { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .footer-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; animation: pulse 2s infinite; }
+
+  .divider { height: 1px; background: var(--border); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+
+  @media (max-width: 600px) {
+    nav { padding: 0 1.2rem; }
+    .hero, section { padding-left: 1.2rem; padding-right: 1.2rem; }
+    .status-bar { gap: 1.2rem; }
+    .exp-item { grid-template-columns: 1fr; }
+    .exp-date { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">MK.portfolio</div>
+  <div class="nav-links">
+    <a onclick="scrollToSection('skills')">skills</a>
+    <a onclick="scrollToSection('projects')">projects</a>
+    <a onclick="scrollToSection('experience')">experience</a>
+    <a onclick="scrollToSection('contact')">contact</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-tag">// electrical &amp; electronics engineer</div>
+  <h1>Madila<br><span>Kotesh</span></h1>
+  <p class="hero-sub">Building the future of energy systems — from smart IoT meters to EV infrastructure and PLC-driven automation.</p>
+  <div class="hero-cta">
+    <button class="btn-primary" onclick="scrollToSection('projects')">View Projects</button>
+    <button class="btn-ghost" onclick="scrollToSection('contact')">Get in Touch</button>
+  </div>
+  <div class="status-bar">
+    <div class="status-item">
+      <span class="status-val">8.5</span>
+      <span class="status-lbl">CGPA</span>
+    </div>
+    <div class="status-item">
+      <span class="status-val">3</span>
+      <span class="status-lbl">Projects</span>
+    </div>
+    <div class="status-item">
+      <span class="status-val">2</span>
+      <span class="status-lbl">Internships</span>
+    </div>
+    <div class="status-item">
+      <span class="status-val">4</span>
+      <span class="status-lbl">Languages</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="skills">
+  <div class="section-label">01 &nbsp; expertise</div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">⚡</div>
+      <div class="skill-name">Power Systems</div>
+      <div class="skill-tags">
+        <span class="tag">Power Systems</span>
+        <span class="tag">Protection</span>
+        <span class="tag">Switchgear</span>
+        <span class="tag">Machines</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔋</div>
+      <div class="skill-name">Electric Vehicles</div>
+      <div class="skill-tags">
+        <span class="tag">EV Systems</span>
+        <span class="tag">V2G</span>
+        <span class="tag">Charging Infra</span>
+        <span class="tag">Diagnostics</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🤖</div>
+      <div class="skill-name">Automation</div>
+      <div class="skill-tags">
+        <span class="tag">PLC</span>
+        <span class="tag">Schneider</span>
+        <span class="tag">Mindsphere</span>
+        <span class="tag">TANSAM</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📡</div>
+      <div class="skill-name">IoT & Embedded</div>
+      <div class="skill-tags">
+        <span class="tag">ESP8266</span>
+        <span class="tag">Proteus</span>
+        <span class="tag">Blynk</span>
+        <span class="tag">Real-time</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">💻</div>
+      <div class="skill-name">Software & Simulation</div>
+      <div class="skill-tags">
+        <span class="tag">MATLAB</span>
+        <span class="tag">Simulink</span>
+        <span class="tag">C</span>
+        <span class="tag">HTML/CSS</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">☁️</div>
+      <div class="skill-name">Cloud & Comms</div>
+      <div class="skill-tags">
+        <span class="tag">Cloud Computing</span>
+        <span class="tag">IoT Protocols</span>
+        <span class="tag">Communication</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="projects">
+  <div class="section-label">02 &nbsp; projects</div>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="proj-num">01 /</div>
+      <div class="proj-title">IoT-Based Smart Energy Monitoring System</div>
+      <div class="proj-desc">Built an IoT smart energy meter with ESP8266 enabling real-time monitoring, automated alerts, and overload protection via the Blynk app.</div>
+      <div class="proj-tech">
+        <span class="tag">ESP8266</span>
+        <span class="tag">Blynk</span>
+        <span class="tag">IoT</span>
+        <span class="tag">Real-time</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="proj-num">02 /</div>
+      <div class="proj-title">PLC-Based Smart Parking System</div>
+      <div class="proj-desc">Developed an automated parking system using Schneider Electric PLC for vehicle detection, dynamic slot allocation, and efficient parking flow management.</div>
+      <div class="proj-tech">
+        <span class="tag">PLC</span>
+        <span class="tag">Schneider</span>
+        <span class="tag">Automation</span>
+        <span class="tag">Sensors</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="proj-num">03 /</div>
+      <div class="proj-title">BlackBox++ Smart Flight Event Recorder</div>
+      <div class="proj-desc">A smart embedded system that records and transmits real-time flight data over an uplink, improving aviation safety and enabling rapid fault detection.</div>
+      <div class="proj-tech">
+        <span class="tag">Embedded</span>
+        <span class="tag">Real-time Uplink</span>
+        <span class="tag">Safety Systems</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="experience">
+  <div class="section-label">03 &nbsp; experience</div>
+  <div class="exp-list">
+    <div class="exp-item">
+      <div>
+        <div class="exp-role">Electric Vehicle Intern</div>
+        <div class="exp-company">Mithun Motors</div>
+        <div class="exp-desc">Assisted with EV diagnostics, maintenance, and performance analysis. Gained hands-on experience in electric vehicle systems and charging infrastructure.</div>
+      </div>
+      <div class="exp-date">Jun – Jun 2025</div>
+    </div>
+    <div class="exp-item">
+      <div>
+        <div class="exp-role">Frontend Developer Intern</div>
+        <div class="exp-company">Litz Technologies Pvt. Ltd.</div>
+        <div class="exp-desc">Improved website performance and responsiveness using HTML and CSS, enhancing user experience through efficient team collaboration.</div>
+      </div>
+      <div class="exp-date">Jun – Jul 2024</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="certs">
+  <div class="section-label">04 &nbsp; certifications &amp; workshops</div>
+  <div class="certs-grid">
+    <div class="cert-card">
+      <div class="cert-icon">☁️</div>
+      <div>
+        <div class="cert-name">Cloud Computing</div>
+        <div class="cert-org">CDAC · Employability Enhancement</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">⚙️</div>
+      <div>
+        <div class="cert-name">Industrial Automation with Mindsphere</div>
+        <div class="cert-org">TANSAM · Siemens</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">📡</div>
+      <div>
+        <div class="cert-name">Introduction to IoT</div>
+        <div class="cert-org">NPTEL</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🛠️</div>
+      <div>
+        <div class="cert-name">Employability Enhancement Workshop</div>
+        <div class="cert-org">TANSAM · Siemens</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🔌</div>
+      <div>
+        <div class="cert-name">Embedded Systems & IoT Workshop</div>
+        <div class="cert-org">Proteus Design Suite</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="contact" class="contact-section">
+  <div class="contact-inner">
+    <div class="section-label">05 &nbsp; contact</div>
+    <h2>Let's connect</h2>
+    <p style="color: var(--muted); margin-top: .5rem; font-size: 14px;">Open to internships, projects, and collaborations in EV, power systems, and automation.</p>
+    <div class="contact-links">
+      <a class="contact-chip" href="mailto:madilakotesh@gmail.com">
+        <span class="contact-chip-icon">✉</span> madilakotesh@gmail.com
+      </a>
+      <a class="contact-chip" href="tel:+918658602109">
+        <span class="contact-chip-icon">📞</span> +91 86586 02109
+      </a>
+      <a class="contact-chip" href="https://www.linkedin.com/in/YOUR-LINKEDIN" target="_blank">
+        <span class="contact-chip-icon">in</span> LinkedIn
+      </a>
+      <a class="contact-chip" href="https://www.github.com/YOUR-GITHUB" target="_blank">
+        <span class="contact-chip-icon">⌥</span> GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-copy">© 2025 Madila Kotesh &nbsp;·&nbsp; Chennai, India</span>
+  <span class="footer-dot"></span>
+</footer>
+
+<script>
+  function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+</script>
+
+</body>
+</html>
